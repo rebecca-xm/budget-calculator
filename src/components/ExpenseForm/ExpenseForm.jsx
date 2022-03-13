@@ -1,8 +1,14 @@
 import { MdSend } from "react-icons/md";
 
-export const ExpenseForm = () => {
+export const ExpenseForm = ({
+  charge,
+  amount,
+  handleCharge,
+  handleAmount,
+  handleSubmit,
+}) => {
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div>
         <div>
           <label htmlFor="charge">charge</label>
@@ -11,6 +17,8 @@ export const ExpenseForm = () => {
             id="charge"
             name="charge"
             placeholder="e.g. bills"
+            value={charge}
+            onChange={handleCharge}
           />
         </div>
         <div>
@@ -20,10 +28,14 @@ export const ExpenseForm = () => {
             id="amount"
             name="amount"
             placeholder="e.g. 250"
+            value={amount}
+            onChange={handleAmount}
           />
         </div>
       </div>
-      <button type="submit">Add expense to your list <MdSend /></button>
+      <button type="submit">
+        Add expense to your list <MdSend />
+      </button>
     </form>
   );
 };

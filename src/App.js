@@ -11,21 +11,47 @@ const InitialExpenses = [
   { id: uuidv4(), charge: 'food', amount: 80 },
 ];
 
-// console.log(InitialExpenses);
-
 function App() {
   const [expenses, setExpenses] = useState(InitialExpenses);
+  const [charge, setCharge] = useState('');
+  const [amount, setAmount] = useState('');
+
+  const handleCharge = (e) => {
+    setCharge(e.target.value);
+  };
+
+  const handleAmount = (e) => {
+    setAmount(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (charge !== '' && amount > 0) {
+      const addExpense = { id: uuidv4(), charge, amount };
+      setExpenses([...expenses, addExpense]);
+      setCharge('');
+      setAmount('');
+    } else {
+      // call alert here
+    }
+  };
 
   return (
     <>
       <Alert />
       <h1>Keep track of your expenses</h1>
       <main>
-        <ExpenseForm />
+        <ExpenseForm
+          charge={charge}
+          amount={amount}
+          handleCharge={handleCharge}
+          handleAmount={handleAmount}
+          handleSubmit={handleSubmit}
+        />
         <ExpenseList expenses={expenses} />
       </main>
       <h2>total spending: <span>€ {expenses.reduce((acc, curr) => {
-        return (acc += curr.amount);
+        return (acc += parseInt(curr.amount));
       }, 0)}</span></h2>
     </>
   );
