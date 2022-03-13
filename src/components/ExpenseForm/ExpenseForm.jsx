@@ -17,6 +17,7 @@ export const ExpenseForm = ({
             id="charge"
             name="charge"
             placeholder="e.g. bills"
+            min="0"
             value={charge}
             onChange={handleCharge}
           />
@@ -29,6 +30,7 @@ export const ExpenseForm = ({
             name="amount"
             placeholder="e.g. 250"
             value={amount}
+            min="0"
             onChange={handleAmount}
           />
         </div>
