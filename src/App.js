@@ -1,3 +1,4 @@
+import './App.scss';
 import { Alert } from "./components/AddExpenseAlert/Alert";
 import { ExpenseForm } from "./components/ExpenseForm/ExpenseForm";
 import { ExpenseList } from "./components/ExpenseList/ExpenseList";
@@ -15,6 +16,7 @@ function App() {
   const [expenses, setExpenses] = useState(InitialExpenses);
   const [charge, setCharge] = useState('');
   const [amount, setAmount] = useState('');
+  const [alert, setAlert] = useState({ show: false });
 
   const handleCharge = (e) => {
     setCharge(e.target.value);
@@ -24,6 +26,13 @@ function App() {
     setAmount(e.target.value);
   };
 
+  const handleAlert = ({ type, text }) => {
+    setAlert({ show: true, type, text });
+    setTimeout(() => {
+      setAlert({ show: false })
+    }, 2500);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (charge !== '' && amount > 0) {
@@ -31,14 +40,15 @@ function App() {
       setExpenses([...expenses, addExpense]);
       setCharge('');
       setAmount('');
+      handleAlert({ type: 'success', text: 'Your expense has been successfully added!' });
     } else {
-      // call alert here
+      handleAlert({ type: 'danger', text: 'You have to enter a charge and a valid amount!' });
     }
   };
 
   return (
     <>
-      <Alert />
+      {alert.show && <Alert type={alert.type} text={alert.text} />}
       <h1>Keep track of your expenses</h1>
       <main>
         <ExpenseForm
