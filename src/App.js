@@ -3,16 +3,18 @@ import { Alert } from "./components/AddExpenseAlert/Alert";
 import { ExpenseForm } from "./components/ExpenseForm/ExpenseForm";
 import { ExpenseList } from "./components/ExpenseList/ExpenseList";
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const InitialExpenses = [
-  { id: uuidv4(), charge: 'Dog Food', amount: 40 },
-  { id: uuidv4(), charge: 'Bills', amount: 200 },
-  { id: uuidv4(), charge: 'Gas', amount: 50 },
-  { id: uuidv4(), charge: 'Food', amount: 80 },
-];
+// const InitialExpenses = [
+//   { id: uuidv4(), charge: 'Dog Food', amount: 40 },
+//   { id: uuidv4(), charge: 'Bills', amount: 200 },
+//   { id: uuidv4(), charge: 'Gas', amount: 50 },
+//   { id: uuidv4(), charge: 'Food', amount: 80 },
+// ];
 
-//TODO: save data to local storage and add style to components
+const InitialExpenses = localStorage.getItem('expenses') ? JSON.parse(localStorage.getItem('expenses')) : [];
+
+//TODO: add style to components
 
 function App() {
   const [expenses, setExpenses] = useState(InitialExpenses);
@@ -21,6 +23,10 @@ function App() {
   const [alert, setAlert] = useState({ show: false });
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState(0);
+
+  useEffect(() => {
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+  }, [expenses]);
 
   const handleCharge = (e) => {
     setCharge(e.target.value);
