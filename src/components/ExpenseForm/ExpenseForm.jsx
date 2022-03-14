@@ -6,6 +6,7 @@ export const ExpenseForm = ({
   handleCharge,
   handleAmount,
   handleSubmit,
+  edit,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -36,7 +37,8 @@ export const ExpenseForm = ({
         </div>
       </div>
       <button type="submit">
-        Add expense to your list <MdSend />
+        {edit ? "Edit " : "Add expense to your list"}
+        <MdSend />
       </button>
     </form>
   );
